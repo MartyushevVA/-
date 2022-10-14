@@ -1,7 +1,7 @@
 class Grid():
     def __init__(self, length, width, cells):
         if (length == int(length) and width == int(width) and cells == list(cells)):
-        	self.length = length
+            self.length = length
             self.width = width
             self.cells = cells
     def checkingCell(self, y, x):
