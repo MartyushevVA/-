@@ -1,8 +1,9 @@
 class Grid():
     def __init__(self, length, width, cells):
-        self.length = length
-        self.width = width
-        self.cells = cells
+        if (length == int(length) and width == int(width) and cells == list(cells)):
+        	self.length = length
+            self.width = width
+            self.cells = cells
     def checkingCell(self, y, x):
         if self.cells[y][x].isalive:
             if (self.cells[y-1][x-1] + self.cells[y-1][x] + self.cells[y-1][x+1] + self.cells[y][x+1] + self.cells[y+1][x+1]\
