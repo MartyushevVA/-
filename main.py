@@ -1,11 +1,34 @@
 import pygame
 import random
 import sys
+from tkinter import *
 
 W_S = 1000
 C_S = 20
-RULE = '3/2,3'
-RANDOM = 1
+
+
+def clicked():
+    global RULE
+    RULE = entry.get()
+
+
+window = Tk()
+window.title("Настройка конфигурации")
+window.geometry('320x100')
+lbl1 = Label(window, text="Заполнить поле в случайном порядке?", font=("Arial Bold", 10))
+lbl1.grid(column=0, row=0)
+chk_state = BooleanVar()
+chk_state.set(True)
+chk = Checkbutton(window, text='', var=chk_state)
+chk.grid(column=1, row=0)
+lbl2 = Label(window, text="Введите правило:", font=("Arial Bold", 10))
+lbl2.grid(column=0, row=1)
+entry = Entry(window, width=10)
+entry.grid(column=1, row=1)
+btn = Button(window, text="Подтвердить", command=clicked)
+btn.grid(column=0, row=2)
+window.mainloop()
+RANDOM = chk_state.get()
 
 
 class Window:
@@ -16,7 +39,6 @@ class Window:
     def __init__(self):
         pygame.init()
         self.surface = pygame.display.set_mode((self.W_S, self.W_S))
-        # ширина, высота
 
     def draw_cells(self, cells):
         for i in range(len(cells)):
