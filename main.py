@@ -122,10 +122,10 @@ class CellularAutomaton:
         s = RULE_sections[1].split(',')
         for key, item in self.cells.items():
             if self.cells[key].status:
-                if not (str(item.neighbors_count) in s):
+                if not (str(item.neighbors_count) in str(s)):
                     self.cells[key].status = False
             else:
-                if str(item.neighbors_count) in b:
+                if str(item.neighbors_count) in str(b):
                     self.cells[key].status = True
 
 
