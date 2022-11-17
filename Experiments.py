@@ -5,33 +5,38 @@ from tkinter import *
 
 W_S = 1000
 C_S = 20
-COLORS = [(0, 0, 0), (255, 100, 135), (255, 91, 16), (14, 220, 142), (142, 245, 16)]
+COLORS = [(40, 40, 40), (255, 100, 135), (255, 91, 16), (14, 220, 142), (142, 245, 16)]
+
 
 def clicked():
     global RULE
-    RULE = entry.get()
+    global NUM_OF_COND
+    RULE = pravilo.get()
+    NUM_OF_COND = int(sost.get())
 
 
 window = Tk()
 window.title("Настройка конфигурации")
 window.geometry('320x100')
-lbl1 = Label(window, text="Заполнить поле в случайном порядке?", font=("Arial Bold", 10))
-lbl1.grid(column=0, row=0)
+vopros = Label(window, text="Заполнить поле в случайном порядке?", font=("Arial Bold", 10))
+vopros.grid(column=0, row=0)
 chk_state = BooleanVar()
 chk_state.set(True)
 chk = Checkbutton(window, text='', var=chk_state)
 chk.grid(column=1, row=0)
-lbl2 = Label(window, text="Введите правило:", font=("Arial Bold", 10))
-lbl2.grid(column=0, row=1)
-entry = Entry(window, width=10)
-entry.grid(column=1, row=1)
+vvodpravila = Label(window, text="Введите правило:", font=("Arial Bold", 10))
+vvodpravila.grid(column=0, row=2)
+pravilo = Entry(window, width=10)
+pravilo.grid(column=1, row=2)
+vvodsost = Label(window, text="Введите количество состояний:", font=("Arial Bold", 10))
+vvodsost.grid(column=0, row=1)
+sost = Entry(window, width=10)
+sost.grid(column=1, row=1)
 btn = Button(window, text="Подтвердить", command=clicked)
-btn.grid(column=0, row=2)
+btn.grid(column=0, row=3)
 window.mainloop()
 RANDOM = chk_state.get()
 
-# количество состояний
-NUM_OF_COND = 3
 
 class Window:
     W_S = W_S
@@ -123,37 +128,14 @@ class CellularAutomaton:
 
     def update_cells(self):
         RULE_sections = self.RULE.split('/')
-        Laws = [0] * NUM_OF_COND
+        Laws = []
         for k in range(NUM_OF_COND):
-            Laws[k] = RULE_sections[k].split(',')
+            Laws.append(RULE_sections[k].split(','))
         for key, item in self.cells.items():
             for k in range(NUM_OF_COND):
                 if self.cells[key].status == k:
-                    if item.neighbors_count[(k+1) % NUM_OF_COND] == Laws[k]:
-                        self.cells[key].status = (k+1) % NUM_OF_COND
-
-
-
-'''''
-class Rules:
-    birth: int
-    survive: int
-    rule: str
-    def __init__(self, birth, survive):
-        b = ''
-        s = ''
-        for i in range(len(str(birth))):
-            if i > 0:
-                b = b + ',' + str(birth)[i]
-            else:
-                b = str(birth)[i]
-        for i in range(len(str(survive))):
-            if i > 0:
-                s = s + ',' + str(survive)[i]
-            else:
-                s = str(survive)[i]
-        self.rule = b + '/' + s
-'''''
+                    if item.neighbors_count[abs(k - 1) % NUM_OF_COND] == int(str(Laws[k]).replace("['", "").replace("']", "")):
+                        self.cells[key].status = (k + 1) % NUM_OF_COND
 
 
 def main():
@@ -180,3 +162,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
