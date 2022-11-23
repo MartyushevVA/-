@@ -134,8 +134,9 @@ class CellularAutomaton:
         for key, item in self.cells.items():
             for k in range(NUM_OF_COND):
                 if self.cells[key].status == k:
-                    if item.neighbors_count[abs(k - 1) % NUM_OF_COND] == int(str(Laws[k]).replace("['", "").replace("']", "")):
-                        self.cells[key].status = (k + 1) % NUM_OF_COND
+                    if str(item.neighbors_count[abs(k - 1) % NUM_OF_COND]) in str(Laws[k]).replace("['", "").replace("']", ""):
+                        self.cells[key].status = abs(k + 1) % NUM_OF_COND
+                        break
 
 
 def main():
@@ -162,4 +163,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
