@@ -86,7 +86,7 @@ class Cell:
 class CellularAutomaton:
     W_S = W_S
     C_S = C_S
-    WIDTH = W_S // C_S  #
+    WIDTH = W_S // C_S
     cells: dict
 
     def __init__(self):
@@ -95,7 +95,7 @@ class CellularAutomaton:
 
     def random_stats(self):
         for k in range(3):
-            for i in range(len(self.cells) // 2):
+            for i in range(len(self.cells) // 4):
                 random_id = random.randint(0, len(self.cells) - 1)
                 self.cells[random_id].status = k
         self.update_neighbors()
@@ -134,16 +134,16 @@ class CellularAutomaton:
             else:
                 chance = 0
 
-            if self.cells[key].status == 0 and chance == 1:
-                if self.cells[key].neighbors_count[1] > 1:
-                    self.cells[key].status = 1
-                else:
-                    newchance = random.randint(0, 50)
-                    if newchance == 0:
+            if chance:
+                if self.cells[key].status == 0:
+                    if self.cells[key].neighbors_count[1] > 1:
                         self.cells[key].status = 1
+                    else:
+                        newchance = random.randint(0, 50)
+                        if newchance == 0:
+                            self.cells[key].status = 1
 
-            elif self.cells[key].status == 1:
-                if chance == 1:
+                elif self.cells[key].status == 1:
                     if self.cells[key].neighbors_count[2] > 0:
                         self.cells[key].status = 2
                         self.cells[key].birthtime = time
@@ -152,8 +152,7 @@ class CellularAutomaton:
                         if newchance == 0:
                             self.cells[key].status = 0
 
-            elif self.cells[key].status == 2:
-                if chance == 1:
+                elif self.cells[key].status == 2:
                     if time - self.cells[key].birthtime > 10000:
                         self.cells[key].birthtime = 0
                         self.cells[key].status = 0
@@ -186,9 +185,7 @@ def main():
         if result[0] == 'Start/Stop':
             PLAY = not PLAY
         elif result[0] == 'Changing':
-            Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = (Automaton.cells[
-                                                                                         result[1][1] + result[1][
-                                                                                             0] * Automaton.WIDTH].status + 1) % 3
+            Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = (Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status + 1) % 3
             Automaton.update_neighbors()
         pygame.time.wait(10)
 
