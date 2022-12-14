@@ -80,7 +80,7 @@ class Cell:
         self.y = y
         self.status = 0
         self.neighbors_count = [0] * 3
-        self.birthtime = -1
+        self.birthtime = 0
 
 
 class CellularAutomaton:
@@ -127,6 +127,7 @@ class CellularAutomaton:
                 self.cells[curr_cell].neighbors_count[k] = count[k]
 
     def update_cells(self, time):
+        ti = time
         for key, item in self.cells.items():
             chance = random.randint(0, 10)
             if chance > 4:
@@ -136,7 +137,7 @@ class CellularAutomaton:
 
             if chance:
                 if self.cells[key].status == 0:
-                    if self.cells[key].neighbors_count[1] > 1:
+                    if self.cells[key].neighbors_count[1] > 2:
                         self.cells[key].status = 1
                     else:
                         newchance = random.randint(0, 50)
@@ -144,31 +145,31 @@ class CellularAutomaton:
                             self.cells[key].status = 1
 
                 elif self.cells[key].status == 1:
-                    if self.cells[key].neighbors_count[2] > 0:
+                    if self.cells[key].neighbors_count[2] > 2:
                         self.cells[key].status = 2
-                        self.cells[key].birthtime = time
+                        self.cells[key].birthtime = ti
                     else:
                         newchance = random.randint(0, 50)
                         if newchance == 0:
                             self.cells[key].status = 0
 
                 elif self.cells[key].status == 2:
-                    if time - self.cells[key].birthtime > 10000:
-                        self.cells[key].birthtime = 0
-                        self.cells[key].status = 0
-                    else:
-                        if self.cells[key].neighbors_count[2] > 5:
-                            self.cells[key].birthtime += 5000
+                    if self.cells[key].birthtime > 0:
+                        if ti - self.cells[key].birthtime > 1000:
+                            self.cells[key].birthtime = 0
+                            self.cells[key].status = 0
+                        else:
+                            if self.cells[key].neighbors_count[2] > 4:
+                                self.cells[key].birthtime += 50
 
     def random_green(self):
-        for i in range(len(self.cells) // 2):
+        for i in range(len(self.cells) // 16):
             random_id = random.randint(0, len(self.cells) - 1)
             self.cells[random_id].status = 1
         self.update_neighbors()
 
 
 def main():
-    # счётчик = pygame.time.get_ticks()
     PLAY = 0
     Game = Window()
     Automaton = CellularAutomaton()
@@ -176,7 +177,7 @@ def main():
         if PLAY:
             Automaton.update_cells(pygame.time.get_ticks())
             Automaton.update_neighbors()
-            if pygame.time.get_ticks() % 60000 == 0:
+            if pygame.time.get_ticks() % 600 == 0:
                 Automaton.random_green()
         pygame.display.update()
         Game.surface.fill((40, 40, 40))
