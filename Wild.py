@@ -52,11 +52,14 @@ class Cell:
     time_of_hungry: int
     location_of_closest_opponent: int
     close_opp: int
+    napr: int
+    repr: bool
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.status = 0
+        self.repr = 0
 
 
 class CellularAutomaton:
@@ -64,11 +67,13 @@ class CellularAutomaton:
     C_S = C_S
     WIDTH = W_S // C_S
     cells: dict
+    duplicate: dict
     hunters: list
     victims: list
 
     def __init__(self):
         self.cells = {j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
+        self.duplicate = self.cells
         self.victims = []
         self.hunters = []
         self.random_stats()
@@ -108,10 +113,7 @@ class CellularAutomaton:
                     self.cells[hun].close_opp = vic
             self.cells[hun].location_of_closest_opponent = minr
 
-    def update_cells(self, time):
-        ti = time
-        masnaprxy = [[1, 1, 0, -1, -1, -1, 0, +1],
-                     [0, -self.WIDTH, -self.WIDTH, -self.WIDTH, 0, +self.WIDTH, +self.WIDTH, +self.WIDTH]]
+    def direction(self):
         masnapr = [1, -self.WIDTH + 1, -self.WIDTH, -self.WIDTH - 1, -1, self.WIDTH - 1, self.WIDTH, self.WIDTH + 1]
         for key, item in self.cells.items():
             if self.cells[key].status:
@@ -185,11 +187,36 @@ class CellularAutomaton:
                         napr = random.randint(0, 4)
                     else:
                         napr = random.randint(0, 7)
+                self.cells[key].napr = napr
+                #print(key, napr, self.cells[key].status)
+                # if not self.cells[key + masnapr[napr]].status:
+                #     self.cells[key + masnapr[napr]] = self.cells[key]
+                #     self.cells[key].status = 0
 
-                print(key, napr, self.cells[key].status)
-                if not self.cells[key + masnapr[napr]].status:
-                    self.cells[key + masnapr[napr]] = self.cells[key]
-                    self.cells[key].status = 0
+
+    def time_checking(self, time):
+        reproduction_massive = [TIMEVICTIMS, TIMEHUNTERS]
+        for key, item in self.cells.items():
+            flag = 1
+            if self.cells[key].status:
+                if self.cells[key].status == 2:
+                    if time - self.cells[key].time_of_hungry > HUNGRY:
+                        self.cells[key].status = 0
+                        flag = 0
+                if flag:
+                    if time - self.cells[key].time_of_reproduction >= reproduction_massive[self.cells[key].status - 1]:
+                        self.cells[key].repr = 1
+
+
+    def movement(self):
+
+
+
+
+
+
+
+
 
 
 def main():
@@ -198,7 +225,9 @@ def main():
     Automaton = CellularAutomaton()
     while True:
         if PLAY:
-            Automaton.update_cells(pygame.time.get_ticks())
+            time = pygame.time.get_ticks()
+            Automaton.time_checking(time)
+            Automaton.direction()
             Automaton.closest_opponent()
         pygame.display.update()
         Game.surface.fill((40, 40, 40))
