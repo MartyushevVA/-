@@ -54,12 +54,16 @@ class Cell:
     close_opp: int
     napr: int
     repr: bool
+    check: bool
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.status = 0
-        self.repr = 0
+        self.time_of_reproduction = 0
+        self.time_of_hungry = 0
+        self.repr = False
+        self.check = True
 
 
 class CellularAutomaton:
@@ -79,19 +83,26 @@ class CellularAutomaton:
         self.random_stats()
 
     def random_stats(self):
-        #(0, len(self.cells) - 1)
         for i in range(NUMVICTIMS):
             random_id = random.randint(self.WIDTH, self.WIDTH * (self.WIDTH - 1) - 1)
             self.cells[random_id].status = 1
             self.victims.append(random_id)
-            self.cells[random_id].time_of_reproduction = TIMEVICTIMS
+            self.cells[random_id].time_of_reproduction = 0
         for i in range(NUMHUNTERS):
             random_id = random.randint(self.WIDTH, self.WIDTH * (self.WIDTH - 1) - 1)
             self.cells[random_id].status = 2
             self.hunters.append(random_id)
-            self.cells[random_id].time_of_reproduction = TIMEHUNTERS
-            self.cells[random_id].time_of_hungry = HUNGRY
-        self.closest_opponent()
+            self.cells[random_id].time_of_reproduction = 0
+            self.cells[random_id].time_of_hungry = 0
+
+    def update_roles(self):
+        self.victims.clear()
+        self.hunters.clear()
+        for key, item in self.cells.items():
+            if self.cells[key].status == 1:
+                self.victims.append(key)
+            if self.cells[key].status == 2:
+                self.hunters.append(key)
 
     def closest_opponent(self):
         for vic in self.victims:
@@ -114,7 +125,6 @@ class CellularAutomaton:
             self.cells[hun].location_of_closest_opponent = minr
 
     def direction(self):
-        masnapr = [1, -self.WIDTH + 1, -self.WIDTH, -self.WIDTH - 1, -1, self.WIDTH - 1, self.WIDTH, self.WIDTH + 1]
         for key, item in self.cells.items():
             if self.cells[key].status:
                 flag = 0
@@ -209,6 +219,38 @@ class CellularAutomaton:
 
 
     def movement(self):
+        masnapr = [1, -self.WIDTH + 1, -self.WIDTH, -self.WIDTH - 1, -1, self.WIDTH - 1, self.WIDTH, self.WIDTH + 1]
+        for key, item in self.cells.items():
+            if self.cells[key].check:
+                if self.cells[key].status == 1:
+                    if self.cells[key + masnapr[self.cells[key].napr]].status == 0:
+                        self.cells[key + masnapr[self.cells[key].napr]].status = 1
+                        self.cells[key + masnapr[self.cells[key].napr]].time_of_reproduction = self.cells[key].time_of_reproduction
+                        self.cells[key + masnapr[self.cells[key].napr]].time_of_hungry = self.cells[key].time_of_hungry
+                        self.cells[key + masnapr[self.cells[key].napr]].repr = self.cells[key].repr
+                        self.cells[key + masnapr[self.cells[key].napr]].check = 0
+                        self.cells[key].status = 0
+                    if self.cells[key + masnapr[self.cells[key].napr]].status == 1 or self.cells[key + masnapr[self.cells[key].napr]].status == 2:
+                        self.cells[key].check = 0
+
+                if self.cells[key].status == 2:
+                    if self.cells[key + masnapr[self.cells[key].napr]].status == 0:
+                        self.cells[key + masnapr[self.cells[key].napr]].status = 2
+                        self.cells[key + masnapr[self.cells[key].napr]].time_of_reproduction = self.cells[key].time_of_reproduction
+                        self.cells[key + masnapr[self.cells[key].napr]].time_of_hungry = self.cells[key].time_of_hungry
+                        self.cells[key + masnapr[self.cells[key].napr]].repr = self.cells[key].repr
+                        self.cells[key + masnapr[self.cells[key].napr]].check = 0
+                        self.cells[key].status = 0
+                    if self.cells[key + masnapr[self.cells[key].napr]].status == 1:
+                        self.cells[key + masnapr[self.cells[key].napr]].status = 2
+                        self.cells[key + masnapr[self.cells[key].napr]].time_of_reproduction = self.cells[key].time_of_reproduction
+                        self.cells[key + masnapr[self.cells[key].napr]].time_of_hungry = 0
+                        self.cells[key + masnapr[self.cells[key].napr]].repr = self.cells[key].repr
+                        self.cells[key + masnapr[self.cells[key].napr]].check = 0
+                        self.cells[key].status = 0
+                    if self.cells[key + masnapr[self.cells[key].napr]].status == 2:
+                        self.cells[key].check = 0
+
 
 
 
@@ -226,9 +268,11 @@ def main():
     while True:
         if PLAY:
             time = pygame.time.get_ticks()
-            Automaton.time_checking(time)
-            Automaton.direction()
             Automaton.closest_opponent()
+            Automaton.direction()
+            # Automaton.time_checking(time)
+            Automaton.movement()
+            Automaton.update_roles()
         pygame.display.update()
         Game.surface.fill((40, 40, 40))
         Game.draw_cells(Automaton.cells)
