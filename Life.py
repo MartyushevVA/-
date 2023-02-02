@@ -44,7 +44,7 @@ class Cell:
     status: bool
     neighbors_count: int
 
-    def __init__(self, y, x):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.status = False
