@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Title</class>
+ <widget class="QMainWindow" name="Title">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Выбор модели</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>320</width>
+      <height>500</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.511364, y1:1, x2:0.5, y2:0, stop:0 rgba(0, 82, 0, 255), stop:1 rgba(0, 0, 0, 255));</string>
+    </property>
+    <widget class="QComboBox" name="CRule">
+     <property name="geometry">
+      <rect>
+       <x>169</x>
+       <y>80</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(224, 255, 220);
+background-color: rgb(91, 107, 88);</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <item>
+      <property name="text">
+       <string>B3/S2,3</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QCheckBox" name="CRandom">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>291</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Заполнить случайным образом</string>
+     </property>
+     <property name="tristate">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LRule">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>161</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="text">
+      <string>Используемое правило:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PBL">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>300</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Игра &quot;Жизнь&quot;</string>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LDelay">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>460</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Задержка (мс):</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="SDelay">
+     <property name="geometry">
+      <rect>
+       <x>106</x>
+       <y>460</y>
+       <width>41</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LNV">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Количество жертв</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LTH">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>220</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Период размножения хищников</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="NH">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>160</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>100</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LRV">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>310</y>
+       <width>141</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Радиус зрения жертв</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="TH">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>220</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="NV">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>190</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>500</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LRH">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>280</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Радиус зрения хищников</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="HH">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>340</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>15</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="TV">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>250</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="RV">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>310</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LNH">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>151</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Количество хищников</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LHH">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>340</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Время голодного существования</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="RH">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>280</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>15</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LTV">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>250</y>
+       <width>191</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Период размножения жертв</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PBHJ">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>300</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Хищник-жертва</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PBE">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>380</y>
+       <width>301</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Экосистема</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PBD">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>420</y>
+       <width>301</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Диффузия</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="LSize">
+     <property name="geometry">
+      <rect>
+       <x>155</x>
+       <y>460</y>
+       <width>121</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>Размер клетки (пк):</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="CS">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>460</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(243, 255, 7, 0);
+color: rgb(224, 255, 220);</string>
+     </property>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
