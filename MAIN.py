@@ -1,7 +1,7 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-#os.startfile(r'C:\Users\ДОМ\PycharmProjects\Клеточный автомат\Wild1.py')
+
 class Ui_Title(object):
     def setupUi(self, Title):
         Title.setObjectName("Title")
@@ -66,6 +66,9 @@ class Ui_Title(object):
         self.SDelay.setFont(font)
         self.SDelay.setStyleSheet("background-color: rgba(243, 255, 7, 0);\n"
                                   "color: rgb(224, 255, 220);")
+        self.SDelay.setMaximum(2000)
+        self.SDelay.setSingleStep(10)
+        self.SDelay.setDisplayIntegerBase(10)
         self.SDelay.setObjectName("SDelay")
         self.LNV = QtWidgets.QLabel(self.widget)
         self.LNV.setGeometry(QtCore.QRect(20, 190, 131, 20))
@@ -221,6 +224,80 @@ class Ui_Title(object):
         self.retranslateUi(Title)
         QtCore.QMetaObject.connectSlotsByName(Title)
 
+        self.add_functions()
+
+    def add_functions(self):
+        self.PBL.clicked.connect(self.Life)
+        self.PBE.clicked.connect(self.Ecosystem)
+        self.PBD.clicked.connect(self.Diffusion)
+        self.PBHJ.clicked.connect(self.Hunter_Victim)
+
+    def Life(self):
+        with open('config.txt', 'w', encoding='cp1251') as f:
+            f.write(str(self.CRandom.isChecked()) + '\n')
+            f.write(self.CRule.currentText() + '\n')
+            f.write(self.NH.text() + '\n')
+            f.write(self.NV.text() + '\n')
+            f.write(self.TH.text() + '\n')
+            f.write(self.TV.text() + '\n')
+            f.write(self.RH.text() + '\n')
+            f.write(self.RV.text() + '\n')
+            f.write(self.HH.text() + '\n')
+            f.write(str(self.SDelay.value()) + '\n')
+            f.write(self.CS.text() + '\n')
+        os.startfile(r'Life.py')
+        sys.exit(app.exec_())
+
+
+    def Ecosystem(self):
+        with open('config.txt', 'w', encoding='cp1251') as f:
+            f.write(str(self.CRandom.isChecked()) + '\n')
+            f.write(self.CRule.currentText() + '\n')
+            f.write(self.NH.text() + '\n')
+            f.write(self.NV.text() + '\n')
+            f.write(self.TH.text() + '\n')
+            f.write(self.TV.text() + '\n')
+            f.write(self.RH.text() + '\n')
+            f.write(self.RV.text() + '\n')
+            f.write(self.HH.text() + '\n')
+            f.write(str(self.SDelay.value()) + '\n')
+            f.write(self.CS.text() + '\n')
+        os.startfile(r'Ecosystem.py')
+        sys.exit(app.exec_())
+
+    def Diffusion(self):
+        with open('config.txt', 'w', encoding='cp1251') as f:
+            f.write(str(self.CRandom.isChecked()) + '\n')
+            f.write(self.CRule.currentText() + '\n')
+            f.write(self.NH.text() + '\n')
+            f.write(self.NV.text() + '\n')
+            f.write(self.TH.text() + '\n')
+            f.write(self.TV.text() + '\n')
+            f.write(self.RH.text() + '\n')
+            f.write(self.RV.text() + '\n')
+            f.write(self.HH.text() + '\n')
+            f.write(str(self.SDelay.value()) + '\n')
+            f.write(self.CS.text() + '\n')
+        os.startfile(r'Diffusion.py')
+        sys.exit(app.exec_())
+
+    def Hunter_Victim(self):
+        with open('config.txt', 'w', encoding='cp1251') as f:
+            f.write(str(self.CRandom.isChecked()) + '\n')
+            f.write(self.CRule.currentText() + '\n')
+            f.write(self.NH.text() + '\n')
+            f.write(self.NV.text() + '\n')
+            f.write(self.TH.text() + '\n')
+            f.write(self.TV.text() + '\n')
+            f.write(self.RH.text() + '\n')
+            f.write(self.RV.text() + '\n')
+            f.write(self.HH.text() + '\n')
+            f.write(str(self.SDelay.value()) + '\n')
+            f.write(self.CS.text() + '\n')
+        os.startfile(r'Hunter-Victim.py')
+        sys.exit(app.exec_())
+
+
     def retranslateUi(self, Title):
         _translate = QtCore.QCoreApplication.translate
         Title.setWindowTitle(_translate("Title", "Выбор модели"))
@@ -233,15 +310,15 @@ class Ui_Title(object):
         self.LTH.setText(_translate("Title", "Период размножения хищников"))
         self.NH.setText(_translate("Title", "100"))
         self.LRV.setText(_translate("Title", "Радиус зрения жертв"))
-        self.TH.setText(_translate("Title", "10"))
+        self.TH.setText(_translate("Title", "100"))
         self.NV.setText(_translate("Title", "500"))
         self.LRH.setText(_translate("Title", "Радиус зрения хищников"))
-        self.HH.setText(_translate("Title", "15"))
-        self.TV.setText(_translate("Title", "10"))
-        self.RV.setText(_translate("Title", "3"))
+        self.HH.setText(_translate("Title", "100"))
+        self.TV.setText(_translate("Title", "100"))
+        self.RV.setText(_translate("Title", "5"))
         self.LNH.setText(_translate("Title", "Количество хищников"))
         self.LHH.setText(_translate("Title", "Время голодного существования"))
-        self.RH.setText(_translate("Title", "15"))
+        self.RH.setText(_translate("Title", "20"))
         self.LTV.setText(_translate("Title", "Период размножения жертв"))
         self.PBHJ.setText(_translate("Title", "Хищник-жертва"))
         self.PBE.setText(_translate("Title", "Экосистема"))

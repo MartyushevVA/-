@@ -1,11 +1,22 @@
 import pygame
 import random
 import sys
-from tkinter import *
 
 W_S = 1000
-C_S = 10
 COLORS = [(40, 40, 40), (37, 213, 0), (246, 0, 24)]
+
+with open('config.txt', 'r', encoding='cp1251') as f:
+    RANDOM = str(f.readline())
+    RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
+    NUMHUNTERS = int(f.readline())
+    NUMVICTIMS = int(f.readline())
+    TIMEHUNTERS = int(f.readline())
+    TIMEVICTIMS = int(f.readline())
+    RADHUNTER = int(f.readline())
+    RADVICTIMS = int(f.readline())
+    HUNGRY = int(f.readline())
+    DELAY = int(f.readline())
+    C_S = int(f.readline())
 
 
 class Window:
@@ -45,7 +56,7 @@ class Cell:
     neighbors_count: list
     birthtime: int
 
-    def __init__(self, y, x):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.status = 0
@@ -157,7 +168,7 @@ def main():
                                                                                          result[1][1] + result[1][
                                                                                              0] * Automaton.WIDTH].status + 1) % 3
             Automaton.update_neighbors()
-        pygame.time.wait(0)
+        pygame.time.wait(DELAY)
 
 
 if __name__ == "__main__":

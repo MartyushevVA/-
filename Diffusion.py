@@ -3,9 +3,19 @@ import random
 import sys
 
 W_S = 1000
-C_S = 10
-RANDOM = 1
 
+with open('config.txt', 'r', encoding='cp1251') as f:
+    RANDOM = str(f.readline())
+    RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
+    NUMHUNTERS = int(f.readline())
+    NUMVICTIMS = int(f.readline())
+    TIMEHUNTERS = int(f.readline())
+    TIMEVICTIMS = int(f.readline())
+    RADHUNTER = int(f.readline())
+    RADVICTIMS = int(f.readline())
+    HUNGRY = int(f.readline())
+    DELAY = int(f.readline())
+    C_S = int(f.readline())
 
 class Window:
     W_S = W_S
@@ -29,10 +39,6 @@ class Window:
             elif i.type == pygame.KEYDOWN:
                 if i.key == pygame.K_SPACE:
                     return ['Start/Stop']
-            elif i.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                pos = (pos[0] // self.C_S, pos[1] // self.C_S)
-                return ['Changing', pos]
         return ['']
 
 
@@ -41,7 +47,7 @@ class Cell:
     y: int
     status: bool
 
-    def __init__(self, y, x):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.status = False
@@ -55,8 +61,7 @@ class CellularAutomaton:
 
     def __init__(self):
         self.cells = {j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
-        if RANDOM:
-            self.random_stats()
+        self.random_stats()
 
     def random_stats(self):
         for i in range(len(self.cells) // 64):
@@ -126,14 +131,8 @@ def main():
         result = Game.check_events()
         if result[0] == 'Start/Stop':
             PLAY = not PLAY
-        elif result[0] == 'Changing':
-            if not Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status:
-                Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = True
-            else:
-                Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = False
-            Automaton.update_neighbors()
         ITER = 1 - ITER
-        pygame.time.wait(10)
+        pygame.time.wait(DELAY)
 
 
 if __name__ == "__main__":

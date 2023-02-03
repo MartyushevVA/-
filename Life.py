@@ -1,12 +1,22 @@
 import pygame
 import random
 import sys
-from tkinter import *
 
 W_S = 1000
-C_S = 10
-RULE = "B3/S2,3"
-RANDOM = 1
+COLORS = [(40, 40, 40), (255, 100, 135)]
+
+with open('config.txt', 'r', encoding='cp1251') as f:
+    RANDOM = str(f.readline())
+    RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
+    NUMHUNTERS = int(f.readline())
+    NUMVICTIMS = int(f.readline())
+    TIMEHUNTERS = int(f.readline())
+    TIMEVICTIMS = int(f.readline())
+    RADHUNTER = int(f.readline())
+    RADVICTIMS = int(f.readline())
+    HUNGRY = int(f.readline())
+    DELAY = int(f.readline())
+    C_S = int(f.readline())
 
 
 class Window:
@@ -20,7 +30,8 @@ class Window:
     def draw_cells(self, cells):
         for i in range(len(cells)):
             if cells[i].status:
-                pygame.draw.rect(self.surface, (255, 100, 135),
+                col = COLORS[cells[i].status]
+                pygame.draw.rect(self.surface, col,
                                  (cells[i].x * self.C_S, cells[i].y * self.C_S, self.C_S, self.C_S))
 
     def check_events(self):
@@ -56,11 +67,12 @@ class CellularAutomaton:
     C_S = C_S
     WIDTH = W_S // C_S
     RULE = RULE
+    RANDOM = RANDOM
     cells: dict
 
     def __init__(self):
         self.cells = {j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
-        if RANDOM:
+        if RANDOM != 0:
             self.random_stats()
 
     def random_stats(self):
@@ -106,28 +118,6 @@ class CellularAutomaton:
                     self.cells[key].status = True
 
 
-'''''
-class Rules:
-    birth: int
-    survive: int
-    rule: str
-    def __init__(self, birth, survive):
-        b = ''
-        s = ''
-        for i in range(len(str(birth))):
-            if i > 0:
-                b = b + ',' + str(birth)[i]
-            else:
-                b = str(birth)[i]
-        for i in range(len(str(survive))):
-            if i > 0:
-                s = s + ',' + str(survive)[i]
-            else:
-                s = str(survive)[i]
-        self.rule = b + '/' + s
-'''''
-
-
 def main():
     PLAY = 0
     Game = Window()
@@ -143,11 +133,12 @@ def main():
         if result[0] == 'Start/Stop':
             PLAY = not PLAY
         elif result[0] == 'Changing':
-            if not Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status:
-                Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = True
+            if not Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status == 0:
+                Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = 0
             else:
-                Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = False
+                Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = 1
             Automaton.update_neighbors()
+        pygame.time.wait(DELAY)
 
 
 if __name__ == "__main__":

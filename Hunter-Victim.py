@@ -2,18 +2,21 @@ import pygame
 import random
 import sys
 
-f = open('config.txt')
-
 W_S = 1000
-C_S = int(f.readline())
 COLORS = [(40, 40, 40), (37, 213, 0), (246, 0, 24)]
-NUMHUNTERS = 100
-NUMVICTIMS = 500
-TIMEHUNTERS = 100
-TIMEVICTIMS = 100
-HUNGRY = 100
-RADHUNTER = 20
-RADVICTIMS = 5
+
+with open('config.txt', 'r', encoding='cp1251') as f:
+    RANDOM = str(f.readline())
+    RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
+    NUMHUNTERS = int(f.readline())
+    NUMVICTIMS = int(f.readline())
+    TIMEHUNTERS = int(f.readline())
+    TIMEVICTIMS = int(f.readline())
+    RADHUNTER = int(f.readline())
+    RADVICTIMS = int(f.readline())
+    HUNGRY = int(f.readline())
+    DELAY = int(f.readline())
+    C_S = int(f.readline())
 
 
 class Window:
@@ -39,10 +42,6 @@ class Window:
             elif i.type == pygame.KEYDOWN:
                 if i.key == pygame.K_SPACE:
                     return ['Start/Stop']
-            # elif i.type == pygame.MOUSEBUTTONDOWN:
-            #     pos = pygame.mouse.get_pos()
-            #     pos = (pos[0] // self.C_S, pos[1] // self.C_S)
-            #     return ['Changing', pos]
         return ['']
 
 
@@ -324,12 +323,8 @@ def main():
         result = Game.check_events()
         if result[0] == 'Start/Stop':
             PLAY = not PLAY
-            # elif result[0] == 'Changing':
-            #     Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = (Automaton.cells[
-            #                                                                                  result[1][1] + result[1][
-            #                                                                                      0] * Automaton.WIDTH].status + 1) % 3
             Automaton.closest_opponent()
-        pygame.time.wait(0)
+        pygame.time.wait(DELAY)
 
 
 if __name__ == "__main__":
