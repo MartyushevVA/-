@@ -6,7 +6,7 @@ W_S = 1000
 COLORS = [(40, 40, 40), (255, 100, 135)]
 
 with open('config.txt', 'r', encoding='cp1251') as f:
-    RANDOM = str(f.readline())
+    RANDOM = f.readline()
     RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
     NUMHUNTERS = int(f.readline())
     NUMVICTIMS = int(f.readline())
@@ -72,7 +72,7 @@ class CellularAutomaton:
 
     def __init__(self):
         self.cells = {j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
-        if RANDOM != 0:
+        if "True" in RANDOM:
             self.random_stats()
 
     def random_stats(self):
@@ -107,8 +107,8 @@ class CellularAutomaton:
 
     def update_cells(self):
         RULE_sections = self.RULE.split('/')
-        b = RULE_sections[0].split(',')
-        s = RULE_sections[1].split(',')
+        b = RULE_sections[0]
+        s = RULE_sections[1]
         for key, item in self.cells.items():
             if self.cells[key].status:
                 if not str(item.neighbors_count) in str(s):

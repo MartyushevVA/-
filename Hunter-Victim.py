@@ -6,7 +6,7 @@ W_S = 1000
 COLORS = [(40, 40, 40), (37, 213, 0), (246, 0, 24)]
 
 with open('config.txt', 'r', encoding='cp1251') as f:
-    RANDOM = str(f.readline())
+    RANDOM = f.readline()
     RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
     NUMHUNTERS = int(f.readline())
     NUMVICTIMS = int(f.readline())
@@ -90,7 +90,8 @@ class CellularAutomaton:
         self.cells = {j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
         self.victims = []
         self.hunters = []
-        self.random_stats()
+        if "True" in RANDOM:
+            self.random_stats()
 
     def random_stats(self):
         #self.WIDTH, self.WIDTH * (self.WIDTH - 1) - 1

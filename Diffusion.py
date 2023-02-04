@@ -5,7 +5,7 @@ import sys
 W_S = 1000
 
 with open('config.txt', 'r', encoding='cp1251') as f:
-    RANDOM = str(f.readline())
+    RANDOM = f.readline()
     RULE = str(f.readline())[:-1].replace('B', '').replace('S', '')
     NUMHUNTERS = int(f.readline())
     NUMVICTIMS = int(f.readline())
@@ -61,7 +61,8 @@ class CellularAutomaton:
 
     def __init__(self):
         self.cells = {j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
-        self.random_stats()
+        if "True" in RANDOM:
+            self.random_stats()
 
     def random_stats(self):
         for i in range(len(self.cells) // 64):
