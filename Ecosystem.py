@@ -1,6 +1,7 @@
 import pygame
 import random
 import sys
+import os
 
 W_S = 1000
 COLORS = [(40, 40, 40), (37, 213, 0), (246, 0, 24)]
@@ -80,6 +81,8 @@ class CellularAutomaton:
             for i in range(len(self.cells) // 4):
                 random_id = random.randint(0, len(self.cells) - 1)
                 self.cells[random_id].status = k
+                # if k>0:
+                #     self.cells[random_id].birthtime = 1
         self.update_neighbors()
 
     def update_neighbors(self):
@@ -109,37 +112,26 @@ class CellularAutomaton:
                 self.cells[curr_cell].neighbors_count[k] = count[k]
 
     def update_cells(self, time):
-        ti = time
         for key, item in self.cells.items():
-            chance = random.randint(0, 10)
-            if chance > 4:
-                chance = 1
+            if self.cells[key].status == 0:
+                if self.cells[key].neighbors_count[1] > 2:
+                    self.cells[key].status = 1
+                    self.cells[key].birthtime = time
+                # else:
+                #     newchance = random.randint(0, 50)
+                #     if newchance == 0:
+                #         self.cells[key].status = 1
             else:
-                chance = 0
+                if time - self.cells[key].birthtime > 1000:
+                    self.cells[key].status = 0
+                    self.cells[key].birthtime = 0
+                else:
+                    if self.cells[key].status == 1:
+                        if self.cells[key].neighbors_count[2] > 2:
+                            self.cells[key].status = 2
+                            self.cells[key].birthtime = time
 
-            if chance:
-                if self.cells[key].status == 0:
-                    if self.cells[key].neighbors_count[1] > 2:
-                        self.cells[key].status = 1
-                    else:
-                        newchance = random.randint(0, 25)
-                        if newchance == 0:
-                            self.cells[key].status = 1
 
-                elif self.cells[key].status == 1:
-                    if self.cells[key].neighbors_count[2] > 2:
-                        self.cells[key].status = 2
-                        self.cells[key].birthtime = ti
-                    else:
-                        newchance = random.randint(0, 50)
-                        if newchance == 0:
-                            self.cells[key].status = 0
-
-                elif self.cells[key].status == 2:
-                    if self.cells[key].birthtime > 0:
-                        if ti - self.cells[key].birthtime > 800 or self.cells[key].neighbors_count[2] < 5:
-                            self.cells[key].birthtime = 0
-                            self.cells[key].status = 0
 
     def random_green(self):
         for i in range(len(self.cells) // 16):
@@ -150,6 +142,8 @@ class CellularAutomaton:
 
 def main():
     PLAY = 0
+    frst = 0
+    d = 0
     Game = Window()
     Automaton = CellularAutomaton()
     while True:
@@ -164,6 +158,9 @@ def main():
         result = Game.check_events()
         if result[0] == 'Start/Stop':
             PLAY = not PLAY
+            if frst == 0:
+                d = pygame.time.get_ticks()
+                frst = 1
         elif result[0] == 'Changing':
             Automaton.cells[result[1][1] + result[1][0] * Automaton.WIDTH].status = (Automaton.cells[
                                                                                          result[1][1] + result[1][
